@@ -88,29 +88,31 @@
     });
   }
 
-  contactFormBtn.addEventListener("click", function (event) {
-    event.preventDefault();
-    var email = contactFormEmail.value;
+  if (contactFormBtn) {
+    contactFormBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      var email = contactFormEmail.value;
 
-    if (validateEmail(email)) {
-      submitEmail(url, email)
-        // submitEmail(url, email)
-        .then(function (data) {
-          if (data.error) {
-            setPostMessage(contactFormConfirm, data.error);
-          } else {
-            setPostMessage(contactFormConfirm);
-          }
+      if (validateEmail(email)) {
+        submitEmail(url, email)
+          // submitEmail(url, email)
+          .then(function (data) {
+            if (data.error) {
+              setPostMessage(contactFormConfirm, data.error);
+            } else {
+              setPostMessage(contactFormConfirm);
+            }
 
-          contactForm.reset();
-        })
-        .catch(function (error) {
-          var errorMessage = document.createTextNode(error.message);
-          contactFormConfirm.appendChild(errorMessage);
-          contactForm.reset();
-        });
-    } else {
-      setPostMessage(contactFormConfirm, "Invalid Email Format");
-    }
-  });
+            contactForm.reset();
+          })
+          .catch(function (error) {
+            var errorMessage = document.createTextNode(error.message);
+            contactFormConfirm.appendChild(errorMessage);
+            contactForm.reset();
+          });
+      } else {
+        setPostMessage(contactFormConfirm, "Invalid Email Format");
+      }
+    });
+  }
 })(window, document);
